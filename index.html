@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>
+        var socket;
+        var mesEdit;
+        var funArray = ["searchusb","searchnet","searchall","netdevlist","usbdevlist",
+                        "netconnect","usbconnect","disconnect","exec","getprintstatus"];
+        
+        var actionArray = ["initprinter",   "resumeprint",  "stopprint",    "pauseprint",   "resetplat",
+                            "autoheight",   "autoplat",     "sendtaskfile", "joblist",	    "historylist",
+                            "jobprint",     "historytojob", "jobprepareprint", "jobdelete",    "adjustjob",
+                            "getmaterials",	"getcurmaterial", "savematerial","resetsdcard"  ];
+
+        var fileBox = document.getElementById('file');
+
+        var reader = null;  //读取操作对象
+        if ("WebSocket" in window) {
+            var ws = new WebSocket("ws://127.0.0.1:3333");
+            socket = ws;
+            ws.onopen = function() {
+                console.log('连接成功');
+                mesEdit = document.getElementById("mes");;
+            };
+            ws.onmessage = function(evt) {
+                var received_msg = evt.data;
+                var textarea = document.getElementById("showMes");
+                textarea.value+=evt.data+"\n";
+
+                textarea.scrollTop = textarea.scrollHeight;
+            };
+            ws.onclose = function() {
+                alert("请检查服务端状态");
+            };
+        } else {
+            alert("浏览器不支持WebSocket");
+        }
+        function send(){
+//            document.getElementById("name").value+":"
+            var message=document.getElementById("mes").value;
+            socket.send(message);
+        }
+
+
+        function cmd(cmd,action)
+        {
+           var sn = document.getElementById("sninput").value;
+           var object = {};
+            object["cmd"] =funArray[cmd];
+
+           if(cmd>4)
+             object["sn"]  = sn;
+
+            if(action>-1)
+                object["action"] = actionArray[action];
+            
+            if(action == 7)
+            {
+                object["filepaths"] = ["/Users/gjh/Desktop/cube.tsk","/Users/gjh/Desktop/独角羊.tsk"];
+                object["username"] = "gjh_web";
+            }else if(action >9 && action< 15)
+            {
+                object["jobid"]= 2;
+            }else if(action == 17)
+            {
+            	object["matid"] = 655745;
+            	object["weight"] = 1;
+            }
+
+            if( action == 14)
+            {
+            	object["down"] =true;
+            }
+
+          mesEdit.innerHTML = JSON.stringify( object );
+        }
+        
+        function uploadfile()
+        {
+            var fileList = document.getElementById("file").files;
+            var file  = fileList[0];
+            ws.send(file.name);
+
+           reader = new FileReader();
+           reader.readAsBinaryString(file); 
+           console.log(reader.result);
+
+           var filedate = {};
+           filedate["filename"] = file.name;
+           reader.onload=function(f)
+            { 
+
+                //ws.binaryType = "blob";
+                var result = this.result;
+                filedate["data"] = result;
+                filedate["cmd"] = "uploadfile"
+                console.log(JSON.stringify( filedate ));
+                ws.send(JSON.stringify( filedate ));
+            }
+           
+        }
+      
+
+
+
+    </script>
+</head>
+<body>
+<label>Receive:</label><br>
+<textarea rows="3" cols="30" id="showMes" style="width:300px;height:400px;"></textarea>
+
+<!--<label>名称</label>-->
+<!--<input type="text" id="name"/>-->
+<!--<br/>-->
+
+<textarea rows="3" cols="30" id="mes" style="width:300px;height:400px;"></textarea>
+<button onclick="send();" >Send</button><br />
+<input type="file" id="file" />
+<button onclick="uploadfile();" >UploadFile</button><br><br />
+
+<label>SN : </label><input type="text" id ="sninput" value="260029"><br><br>
+
+<button onclick="cmd(1,-1);">SearchNet</button>
+<button onclick="cmd(3,-1);">NetDevList</button>
+<button onclick="cmd(0,-1);">SearchUsb</button>
+<button onclick="cmd(4,-1);">UsbDevList</button>
+<button onclick="cmd(2,-1);">SearchAll</button>
+<button onclick="cmd(5,-1);">NetConnect</button>
+<button onclick="cmd(6,-1);">UsbConnect</button>
+<button onclick="cmd(7,-1);">DisConnect</button><br>
+<button onclick="cmd(8,0);">InitPrinter</button>
+<button onclick="cmd(9,-1);">GetPrinterStatus</button>
+<button onclick="cmd(8,5);">AutoHeight</button>
+<button onclick="cmd(8,6);">AutoPlat</button>
+<button onclick="cmd(8,7);">SendTask</button>
+<button onclick="cmd(8,9);">HistoryList</button>
+<button onclick="cmd(8,8);">JobList</button><br>
+<button onclick="cmd(8,10);">JobPrint</button>
+<button onclick="cmd(8,12);">JobPreparePrint</button> 
+
+
+<button onclick="cmd(8,13);">JobDelete</button>
+<button onclick="cmd(8,14);">AdjustJob</button><br>
+
+
+<button onclick="cmd(8,15);">GetMaterila</button>
+<button onclick="cmd(8,16);">GetCurrentMaterial</button>
+<button onclick="cmd(8,17);">SaveMaterila</button>
+<button onclick="cmd(8,18);">ResetSdcard</button><br>
+<!-- <button onclick="cmd(8);">DisConnect</button> -->
+
+
+</body>
+</html>

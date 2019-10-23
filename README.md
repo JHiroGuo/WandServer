@@ -38,7 +38,7 @@ sudo cp tiertime.rules /etc/udev/rules.d/
 
 [ English ](API_en.md)
 
-[ Chinese ](API_zh.md)
+[ 中文 ](API_zh.md)
 
 #### Client
 
@@ -104,7 +104,7 @@ sudo cp tiertime.rules /etc/udev/rules.d/
 
 [ English ](API_en.md)
 
-[ Chinese ](API_zh.md)
+[ 中文 ](API_zh.md)
 
 #### 客户端
 

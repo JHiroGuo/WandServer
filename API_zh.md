@@ -114,7 +114,7 @@
 {
 	"recipted":{
 		"cmd":"searchnet"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success"
@@ -134,7 +134,7 @@
 {
 	"recipted":{
 		"cmd":"netdevlist"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success",
@@ -166,7 +166,7 @@
 {
 	"recipted":{
 		"mcd":"searchall"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success",
@@ -207,7 +207,7 @@
 	"recipted":{
 		"mcd":"usbconnect",
     "sn":"260029"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success"

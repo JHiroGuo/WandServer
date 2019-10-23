@@ -50,11 +50,6 @@ Print server/server refers to the computer that is running Wander Server program
 </table>
 
 
-```
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    -- i5ting_toc -f ReadMe.md -o           
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-```
 
 
 
@@ -116,7 +111,7 @@ feedback：
 {
 	"recipted":{
 		"cmd":"searchnet"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success"
@@ -136,7 +131,7 @@ feedback：
 {
 	"recipted":{
 		"cmd":"netdevlist"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success",
@@ -168,7 +163,7 @@ feedback：
 {
 	"recipted":{
 		"mcd":"searchall"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success",
@@ -209,7 +204,7 @@ feedback
 	"recipted":{
 		"mcd":"usbconnect",
     "sn":"260029"
-	}
+	},
 	"reply":{
 		"status":0,
 		"message":"Success"
@@ -1306,7 +1301,7 @@ For reseting SD card, including materials and languages.
 
 feedback
 
-```
+```json
  {
     "receipted": {
         "action": "resetsdcard",

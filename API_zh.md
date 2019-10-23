@@ -45,6 +45,12 @@
     <td>GJH</td>
     <td>新增打印机控制指令</td>
   </tr>
+  <tr>
+    <td>V0.1.1</td>
+    <td>2019-10-23</td>
+    <td>GJH</td>
+    <td>修改了一些错误的返回</td>
+  </tr>
 </table>
 
 
@@ -398,6 +404,7 @@
 ```json
  // 服务器端 接收指令成功
  {
+   "receipted": {
         "action": "pauseprint",
         "cmd": "exec",
         "ipPort": "::ffff:127.0.0.1-49851",
@@ -1288,7 +1295,7 @@
 
 返回结果
 
-```
+```json
  {
     "receipted": {
         "action": "resetsdcard",
@@ -1513,6 +1520,3 @@
 }
 		
 ```
-
-
-
